@@ -52,39 +52,6 @@ resource "helm_release" "my_awx_operator" {
   ]
 }
 
-/*
-resource "kubernetes_service" "awx_service_lb" {
-  depends_on  = [aws_eks_cluster.awx_cluster, aws_eks_node_group.awx_nodes, aws_rds_cluster.postgres_cluster, kubernetes_namespace.awx_namespace]
-  metadata {
-    name      = "service-loadbalancer"
-    namespace = kubernetes_namespace.awx_namespace.metadata[0].name
-
-    annotations = {
-      foo = "bar"
-      "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
-      "service.beta.kubernetes.io/aws-load-balancer-tls-cert" = aws_acm_certificate.lbtls.arn
-      "service.beta.kubernetes.io/aws-load-balancer-tls-ports" = "https"
-    }
-  }
-
-  spec {
-    type = "LoadBalancer"
-
-    selector = {
-        "app.kubernetes.io/component"   = "awx"
-        "app.kubernetes.io/managed-by"  = "awx-operator"
-        "app.kubernetes.io/name"        = "awx-web"
-    }
-
-    port {
-      name       = "https"
-      protocol   = "TCP"
-      port       = 443
-      target_port = 8052
-    }
-  }
-}
-*/
 
 data "kubernetes_service" "awx_lb_details" {
   metadata {
