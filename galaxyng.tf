@@ -130,7 +130,7 @@ resource "local_file" "config_unmanaged_yaml" {
 # Provisioner to run local commands
 resource "null_resource" "custom_operator_install" {
 
-  depends_on = [ helm_release.pulp, kubernetes_secret.external_database, aws_eks_cluster.awx_cluster, aws_eks_node_group.awx_nodes, aws_rds_cluster.postgres_cluster, kubernetes_service.service_lb, null_resource.csi_driver_install]
+  depends_on = [ helm_release.pulp, kubernetes_secret.external_database, aws_eks_cluster.awx_cluster, aws_eks_node_group.awx_nodes, aws_rds_cluster.postgres_cluster, kubernetes_service.service_lb] //, null_resource.csi_driver_install]
 
   triggers = {
     always_run = "${timestamp()}"
@@ -154,6 +154,7 @@ resource "null_resource" "custom_operator_install" {
 }
 
 # Provisioner to run local commands
+/*
 resource "null_resource" "csi_driver_install" {
 
   depends_on = [ aws_eks_cluster.awx_cluster, aws_eks_node_group.awx_nodes, aws_efs_mount_target.efs_mt]
@@ -169,7 +170,9 @@ resource "null_resource" "csi_driver_install" {
     EOT
   }
 }
+*/
 
+/*
 data "kubernetes_secret" "password_details" {
   metadata {
     name = "${var.galaxy_ng_instance}-admin-password"
@@ -181,3 +184,4 @@ data "kubernetes_secret" "password_details" {
 output "galaxy_login_details_display" {
   value = "############################################## \nLogin to Galaxy NG with below details \nURL: http://${data.kubernetes_service.lb_details.status.0.load_balancer.0.ingress.0.hostname} \nUsername: admin \nPassword: ${nonsensitive(data.kubernetes_secret.password_details.data.password)} \n##############################################"
 }
+*/

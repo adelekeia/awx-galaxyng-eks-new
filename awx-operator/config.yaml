@@ -4,8 +4,13 @@ AWX:
   name: awx
   spec:
     admin_user: admin
-    service_type: NodePort
-    nodeport_port: 30080
+    service_type: LoadBalancer
+    loadbalancer_protocol: https
+    loadbalancer_port: 443
+    service_annotations: |
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:987916376966:certificate/20c439c9-a9c2-4e6f-a944-8d0837b965e2
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
 
   # configurations for external postgres instance
   postgres:
